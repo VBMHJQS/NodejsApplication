@@ -1,8 +1,8 @@
 var fs = require("fs");
 var data = '';
-
+var filename = 'F:\\20160622\\20160601.log';
 // 创建可读流
-var readerStream = fs.createReadStream('input.txt');
+var readerStream = fs.createReadStream(filename);
 
 // 设置编码为 utf8。
 readerStream.setEncoding('UTF8');

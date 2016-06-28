@@ -9,8 +9,9 @@ function generateTxt(str){
   var res = str.match(regExp);
   console.log(res);
   for(i=0;i<res.length;i++){
-    console.log(res[i]);
+    res[i] = res[i].replace('[','').replace(']','');
   }
+  console.log(res);
   //console.log(typeof res);
   // while (res = regExp.search(str)) {
   //   console.log(res);
