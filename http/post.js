@@ -14,6 +14,7 @@ var options = {
   path:'/sig/user/testNodePost',
   method:'POST',
   headers:{
+	'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.110 Safari/537.36',
     'Content-Type' : 'application/x-www-form-urlencoded',// 不写这个参数，后台会接收不到数据
     'Content-Length' : post_data.length
   }
