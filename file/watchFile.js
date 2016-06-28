@@ -4,10 +4,6 @@
 var fs = require('fs');
 var fileName = 'input.txt';
 var fileOPFlag="a+";
-var newlines = [
-    //13, // \r
-    10  // \n
-];
 fs.open(fileName,fileOPFlag,function(error,fd){
     var buffer;
     var remainder = null;
@@ -25,13 +21,15 @@ fs.open(fileName,fileOPFlag,function(error,fd){
            console.log('文件读取错误');
         }
        });
+
+       function generateTxt(str){
+        var temp = str.split('\r\n');
+        for(var s in temp){
+          console.log(temp[s]);
+        }
+       }
 });
 
-function generateTxt(str){
- var temp = str.split('\r\n');
- for(var s in temp){
-   console.log(temp[s]);
- }
-}
+
 
 console.log('watching file...');

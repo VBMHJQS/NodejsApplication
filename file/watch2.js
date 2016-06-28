@@ -13,14 +13,13 @@ fs.watch(filePath, function (event, filename) {
   } else {
     console.log('filename not provided');
   }
+  function readTxt(){
+    fs.readFile(filePath,{encoding:'utf-8'},function(err,data){
+      if(err){
+        return console.error(err);
+      }else {
+        console.log(data.toString());
+      }
+    });
+  }
 });
-
-function readTxt(){
-  fs.readFile(filePath,{encoding:'utf-8'},function(err,data){
-    if(err){
-      return console.error(err);
-    }else {
-      console.log(data.toString());
-    }
-  });
-}
