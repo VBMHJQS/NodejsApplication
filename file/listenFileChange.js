@@ -9,7 +9,7 @@ var listenArr = new Array();
 function init(){
 	sendHisLogs(filename, listenLogs);
 }
-function sendHisLogs(filename,listenLogs){
+function sendHisLogs(filename,callback){
 	console.log('发送历史信号...');
 	var rl = readline.createInterface({
 		input: fs.createReadStream(filename,{
@@ -24,45 +24,50 @@ function sendHisLogs(filename,listenLogs){
 			logsArr.push(line.toString());
 		}
 	}).on('close', function() {
-		for(var i = 0 ;i<logsArr.length;i++){
-			generateLog(logsArr[i])
-		}
-		listenLogs(filename);
+		generateLog(logsArr)
+		callback(filename);
 	});
 }
-function generateLog(str){
+function generateLog(allArray){
 	var regExp = /(\[.+?\])/g;//(\\[.+?\\])
-	var res = str.match(regExp);
-	for(i=0;i<res.length;i++){
-		res[i] = res[i].replace('[','').replace(']',''); //发送历史日志
+	for(var n = 0;n<allArray.length;n++){
+		var res = allArray[n].match(regExp);
+		for(i=0;i<res.length;i++){
+			res[i] = res[i].replace('[','').replace(']',''); //发送历史日志
+		}
+		res.push(allArray[n].substring(0,23));// 截取日期push进数组最后
+		allArray[n]=res;
 	}
-	res.push(str.substring(0,23));// 截取日期push进数组最后
-	//console.log(res);
-	postToSim(res);
-	// 将数组转成json
-	function postToSim(array){
-		var post_data = querystring.stringify({
-			account:array[0],
-			contract:array[1],
-			action:array[2],
-			quant:array[3],
-			tradePrice:array[4],
-			instrument:array[5],
-			tradedTime:array[6]
-		});
 
+	//console.log(allArray);
+
+	postFun(0);
+
+	function postFun(index){
+		if(index >= allArray.length)return;
+
+		var currParam = allArray[index];
+		var post_data = querystring.stringify({
+			account:currParam[0],
+			contract:currParam[1],
+			action:currParam[2],
+			quant:currParam[3],
+			tradePrice:currParam[4],
+			instrument:currParam[5],
+			tradedTime:currParam[6]
+		});
 		var options = {
 				host:'localhost',
 				port:8080,
 				path:'/sig/user/testNodePost',
 				method:'POST',
 				headers:{
-					'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.110 Safari/537.36',
-					'Content-Type' : 'application/x-www-form-urlencoded',// 不写这个参数，后台会接收不到数据
+					'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:47.0) Gecko/20100101 Firefox/47.0',
+					'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8',// 不写这个参数，后台会接收不到数据
 					'Content-Length' : post_data.length
 				}
 		};
-
+		console.log(post_data);
 		var req = http.request(options,function(res){
 			//console.log('STATUS:' + res.statusCode);
 			//console.log('HEADERS:' + JSON.stringify(res.headers));
@@ -70,8 +75,17 @@ function generateLog(str){
 			res.on('data',function(body){
 				console.log('BODY：' + body);
 			});
+			res.on('end',function(){
+				postFun(index + 1);
+			})
 		});
-		// post方法里
+
+		req.on('err',function(err){
+			if(e){
+				console.info(e);
+			}
+		});
+//		post方法里
 		req.write(post_data,'utf-8');
 		req.end();
 	}
