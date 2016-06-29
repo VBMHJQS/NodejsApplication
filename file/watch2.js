@@ -1,9 +1,9 @@
 /*
 * 监控文件内容的改变 成功
 */
-var fs = require('fs');
+var fs = require('fs');// 引入fs 模块
 
-var filePath = 'F:\\20160622\\20160601.log';
+var filePath = 'input.txt';
 
 fs.watch(filePath, function (event, filename) {
   console.log('event is: ' + event);
@@ -23,3 +23,4 @@ fs.watch(filePath, function (event, filename) {
     });
   }
 });
+console.log(filePath + ' 被监听中...');

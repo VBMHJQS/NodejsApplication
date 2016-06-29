@@ -1,6 +1,6 @@
 var fs = require('fs');
 var readline = require('readline');
-var filename = 'F:\\20160622\\20160620.log';
+var filename = 'input.txt';
 
 var logsArr = new Array();
 var listenArr = new Array();
@@ -8,7 +8,7 @@ function init(){
  sendHisLogs(filename, listenLogs);
 }
 function sendHisLogs(filename,listenLogs){
-  console.log('发送历史信号...');
+
   var rl = readline.createInterface({
     input: fs.createReadStream(filename,{
         enconding:'utf8'
@@ -23,7 +23,8 @@ function sendHisLogs(filename,listenLogs){
     }
   }).on('close', function() {
     for(var i = 0 ;i<logsArr.length;i++){
-      generateLog(logsArr[i])
+      console.log('发送历史信号: ' + logsArr[i]);
+      //generateLog(logsArr[i])
     }
     listenLogs(filename);
   });
@@ -31,6 +32,7 @@ function sendHisLogs(filename,listenLogs){
 function generateLog(str){
   var regExp = /(\[.+?\])/g;//(\\[.+?\\])
   var res = str.match(regExp);
+  console.log(res);
   for(i=0;i<res.length;i++){
     res[i] = res[i].replace('[','').replace(']',''); //发送历史日志
   }
@@ -45,6 +47,7 @@ var listenLogs = function(filePath){
          persistent: true,
          interval: 1000
       },function(curr, prev){
+        console.log(curr);
           if(curr.mtime>prev.mtime){
              //文件内容有变化，那么通知相应的进程可以执行相关操作。例如读物文件写入数据库等
             buffer = new Buffer(curr.size - prev.size);
