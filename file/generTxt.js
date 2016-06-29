@@ -17,5 +17,8 @@ function generateTxt(str){
   //   console.log(res);
   // }
 }
-
-generateTxt(str);
+function getDate(str){
+  console.log(str.substring(0,23));
+}
+getDate(str);
+//generateTxt(str);
