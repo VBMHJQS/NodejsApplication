@@ -2,7 +2,9 @@ var fs = require('fs');
 var readline = require('readline');
 var http = require('http');
 var querystring = require('querystring');
-var filename = 'F:\\20160622\\20160601.log';
+
+var ListenFileChange = function(){
+	var filename = 'F:\\20160622\\20160601.log';
 
 var logsArr = new Array();
 var listenArr = new Array();
@@ -117,12 +119,15 @@ function postFun(index,array,listenFlag){//listenFlag是否继续监听，当在
 	});
 
 	req.on('error',function(err){
-		if(err){	
+		if(err){
 			console.error(err);
 		}
 	});
 //	post方法里
 	req.write(post_data,'utf-8');
 	req.end();
+}
+
+
 }
 init();
