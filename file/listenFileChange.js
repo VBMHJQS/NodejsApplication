@@ -2,7 +2,9 @@ var fs = require('fs');
 var readline = require('readline');
 var http = require('http');
 var querystring = require('querystring');
-var filename = 'F:\\20160622\\20160601.log';
+
+var ListenFileChange = function(){
+	var filename = 'F:\\20160622\\20160601.log';
 
 var logsArr = new Array();
 var listenArr = new Array();
@@ -170,8 +172,11 @@ function postFun(index,array,listenFlag){//listenFlag是否继续监听，当在
 	}
 
 	var currParam = array[index];
+	//2016/06/01 14:59:10.486自动交易信息:帐户[kctest]商品[TF1606]类型[卖平]数量[1]价格[100.99000000]注释[TB_G_RBS_TF000_4MIN_V1_1]
+	var symReg = /[a-zA-Z]+/;
 	var post_data = querystring.stringify({
 		account:currParam[0],
+		symbol_id:currParam[1].match(symReg)[0],
 		contract:currParam[1],
 		action:currParam[2],
 		quant:currParam[3],
@@ -203,13 +208,16 @@ function postFun(index,array,listenFlag){//listenFlag是否继续监听，当在
 		})
 	});
 
-	req.on('err',function(err){
-		if(e){	
-			console.info(e);
+	req.on('error',function(err){
+		if(err){
+			console.error(err);
 		}
 	});
 //	post方法里
 	req.write(post_data,'utf-8');
 	req.end();
+}
+
+
 }
 init();
