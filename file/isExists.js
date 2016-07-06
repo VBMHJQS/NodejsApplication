@@ -5,13 +5,13 @@ var path = 'C:\\Users\\王兴超\\Desktop\\electron-simple\\web_content\\data\\f
 var formulaArray = new Array();
 var formulaStr;
 
-var preIsExist = function(callback) {
+var preIsExist = function() {
+    var deffered = Q.defer();
     var rl = readline.createInterface({
         input: fs.createReadStream(path, {
             enconding: 'utf8'
         }),
-        output: null,
-        terminal: false //这个参数很重要
+        output: null
     });
 
     rl.on('line', function(line) {
@@ -19,18 +19,27 @@ var preIsExist = function(callback) {
             formulaArray.push(JSON.parse(line).formula);
         }
     }).on('close', function() {
-        var deffered = Q.defer();
+
 
         //generateArraySend(logsArr, true); //将历史的数组发送出去
         formulaStr = formulaArray.join(',');
         var index = formulaStr.indexOf('TB_G_YANG_Y000_10MIN_V1_4');
         deffered.resolve(index);
-        console.log(formulaStr);
-        return deffered.promise.nodeify(callback);
+        // console.log(formulaStr);
+
     });
 
+    return deffered.promise;
 
 }
-preIsExist(function(){
-  console.log(123);
-});
+
+function index() {
+    preIsExist().then(function(data) {
+        return data;
+    }, function(error) {
+        console.error(error);
+    });
+    console.log(123);
+}
+console.log(index());
+// module.exports.isExis  ts = preIsExist;
