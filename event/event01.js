@@ -14,7 +14,7 @@ var connectHandler = function connected(){
   console.log('连接成功');
   // 出发data_received 事件
   eventEmitter.emit('data_received');
-}
+};
 //绑定connection事件
 eventEmitter.on('connection',connectHandler);
 eventEmitter.on('data_received',function(){
