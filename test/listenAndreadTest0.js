@@ -19,8 +19,7 @@ function watchFoler() {
     });
     console.log('end');
     appendContent(currPath);
-}
-
+// }
 function appendContent(path) {
     console.log('监听' + path + '文件内容变化');
     fs.open(path, 'a+', function(error, fd) {

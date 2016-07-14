@@ -5,7 +5,7 @@
  var now = new Date();
 
  // Basic usage
-console.log(dateFormat(now, "yyyymmdd"));
+console.log(dateFormat(now, "yyyy-mm-dd h:MM:ss"));
  // Saturday, June 9th, 2007, 5:46:21 PM
 
  // You can use one of several named masks
