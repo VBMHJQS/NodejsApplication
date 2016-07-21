@@ -12,61 +12,61 @@
  * 步骤12可以并行运行，步骤3必须等12完成之后，4要等3完成之后运行
  */
 var async = require('async');
-// async.auto({
-//     getData: function(callback) {
-//         setTimeout(function() {
-//             console.log('1.1: got data');
-//             callback(null, 'mydata');
-//         }, 300);
-//     },
-//     makeFolder: function(callback) {
-//         setTimeout(function() {
-//             console.log('1.1: made folder');
-//             callback(null, 'myfolder');
-//         }, 200);
-//     },
-//     writeFile: ['getData', 'makeFolder', function(callback) {
-//         setTimeout(function() {
-//             console.log('1.1: wrote file');
-//             callback(null, 'myfile');
-//         }, 300);
-//     }],
-//     emailFiles: ['writeFile', function(callback, results) {
-//         console.log('1.1: emailed file: ', results.writeFile);
-//         callback(null, results.writeFile);
-//     }]
-// }, function(err, results) {
-//     console.log(err);
-//     console.log(results);
-// });
-
-
-
-
 async.auto({
     getData: function(callback) {
         setTimeout(function() {
-            console.log('1.2: got data');
+            console.log('1.1: got data');
             callback(null, 'mydata');
         }, 300);
     },
     makeFolder: function(callback) {
         setTimeout(function() {
-            console.log('1.2: made folder');
+            console.log('1.1: made folder');
             callback(null, 'myfolder');
         }, 200);
     },
-    writeFile: ['getData', 'makeFolder', function(callback, results) {
+    writeFile: ['getData', 'makeFolder', function(callback) {
         setTimeout(function() {
-            console.log('1.2: wrote file');
-            callback('myerr');
+            console.log('1.1: wrote file');
+            callback(null, 'myfile');
         }, 300);
     }],
     emailFiles: ['writeFile', function(callback, results) {
-        console.log('1.2: emailed file: ' + results.writeFile);
-        callback('err sending email', results.writeFile);
+        console.log('1.1: emailed file: ', results.writeFile);
+        callback(null, results.writeFile);
     }]
 }, function(err, results) {
     console.log(err);
     console.log(results);
 });
+
+
+
+
+// async.auto({
+//     getData: function(callback) {
+//         setTimeout(function() {
+//             console.log('1.2: got data');
+//             callback(null, 'mydata');
+//         }, 300);
+//     },
+//     makeFolder: function(callback) {
+//         setTimeout(function() {
+//             console.log('1.2: made folder');
+//             callback(null, 'myfolder');
+//         }, 200);
+//     },
+//     writeFile: ['getData', 'makeFolder', function(callback, results) {
+//         setTimeout(function() {
+//             console.log('1.2: wrote file');
+//             callback('myerr');
+//         }, 300);
+//     }],
+//     emailFiles: ['writeFile', function(callback, results) {
+//         console.log('1.2: emailed file: ' + results.writeFile);
+//         callback('err sending email', results.writeFile);
+//     }]
+// }, function(err, results) {
+//     console.log(err);
+//     console.log(results);
+// });
