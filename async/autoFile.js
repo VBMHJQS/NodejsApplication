@@ -35,8 +35,8 @@ async.auto({
     }],
     readResult: ['showResult', function(callback, result) {
         // console.log(result);
-        fs.readFile(d,function(err,data){
-          callback(null, data.toString());
+        fs.readFile(d, function(err, data) {
+            callback(null, data.toString());
         });
 
     }]
