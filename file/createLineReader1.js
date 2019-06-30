@@ -1,4 +1,4 @@
-var fs=require('fs');
+var fs = require('fs');
 var EM = require("events").EventEmitter;
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
@@ -13,57 +13,57 @@ createLineReader1(fileName);
 
 function createLineReader1(fileName) {
     if (!(this instanceof createLineReader1)) return new createLineReader1(fileName);
-    var self=this;
+    var self = this;
     //var currentFileUpdateFlag=0;
-    var fileOPFlag="a+";
-    fs.open(fileName,fileOPFlag,function(error,fd){
+    var fileOPFlag = "a+";
+    fs.open(fileName, fileOPFlag, function (error, fd) {
         var buffer;
         var remainder = null;
-           fs.watchFile(fileName,{
-           persistent: true,
-           interval: 1000
-        },function(curr, prev){
-          // console.log('the current mtime is: ' + curr.mtime);
-          // console.log('the previous mtime was: ' + prev.mtime);
-           if(curr.mtime>prev.mtime){
-               //文件内容有变化，那么通知相应的进程可以执行相关操作。例如读物文件写入数据库等
-               //continueReadData();
-               continueReadData();
-           }else{
-               console.log('curr.mtime<=prev.mtime');
-           }
+        fs.watchFile(fileName, {
+            persistent: true,
+            interval: 1000
+        }, function (curr, prev) {
+            // console.log('the current mtime is: ' + curr.mtime);
+            // console.log('the previous mtime was: ' + prev.mtime);
+            if (curr.mtime > prev.mtime) {
+                //文件内容有变化，那么通知相应的进程可以执行相关操作。例如读物文件写入数据库等
+                //continueReadData();
+                continueReadData();
+            } else {
+                console.log('curr.mtime<=prev.mtime');
+            }
 
-           });
+        });
 
         //先读取原来文件中内容
         //continueReadData();
 
-        function continueReadData(){
-          //console.log('文件被修改');
+        function continueReadData() {
+            //console.log('文件被修改');
             //var fileUpdateFlag=fileUpdateFlagIn;
-            buffer=new Buffer(1024);
-            var start = 0,i=0,tmp;
-            fs.read(fd,buffer,0,buffer.length,null,function(err, bytesRead, buffer){
+            buffer = new Buffer(1024);
+            var start = 0, i = 0, tmp;
+            fs.read(fd, buffer, 0, buffer.length, null, function (err, bytesRead, buffer) {
                 console.log(fd);
-                var data=buffer.slice(0,bytesRead)
-                if(remainder != null){//append newly received data chunk
+                var data = buffer.slice(0, bytesRead)
+                if (remainder != null) {//append newly received data chunk
                     //console.log("remainder length:"+remainder.length);
-                    tmp = new Buffer(remainder.length+bytesRead);
+                    tmp = new Buffer(remainder.length + bytesRead);
                     remainder.copy(tmp);
                     //data=buffer.slice(0,bytesRead);
-                    data.copy(tmp,remainder.length)
+                    data.copy(tmp, remainder.length)
                     data = tmp;
                 }
-                console.log("data length:"+data.length);
-                for(i=0; i<data.length; i++){
-                    if(newlines.indexOf(data[i]) >=0){ //\r \n new line
-                        var line = data.slice(start,i);
+                console.log("data length:" + data.length);
+                for (i = 0; i < data.length; i++) {
+                    if (newlines.indexOf(data[i]) >= 0) { //\r \n new line
+                        var line = data.slice(start, i);
                         self.emit("line", line);
-                        start = i+1;
+                        start = i + 1;
                     }
                 }
 
-                if(start<data.length){
+                if (start < data.length) {
                     remainder = data.slice(start);
                     console.log(remainder.toString());
                     // if(remainder.toString()==='===END==='){
@@ -71,30 +71,29 @@ function createLineReader1(fileName) {
                     //     stopWatch();
                     //     return;
                     // }
-                }else{
+                } else {
                     remainder = null;
                 }
-                if(bytesRead<buffer.length){
+                if (bytesRead < buffer.length) {
                     return;
-                }else{
+                } else {
                     console.log('~~continue~~');
                     continueReadData();
                 }
             });
         }
 
-        function stopWatch(){
-          console.log('unwatch');
+        function stopWatch() {
+            console.log('unwatch');
             fs.unwatchFile(fileName);
         }
 
-        function writeFile(stirng){
-          fs.writeFile('message.txt', stirng,{encoding:'utf-8'},function (err) {
-              if (err) throw err;
-              console.log('It\'s saved!'); //文件被保存
+        function writeFile(stirng) {
+            fs.writeFile('message.txt', stirng, {encoding: 'utf-8'}, function (err) {
+                if (err) throw err;
+                console.log('It\'s saved!'); //文件被保存
             });
         }
-
 
 
     });
@@ -103,4 +102,4 @@ function createLineReader1(fileName) {
 
 util.inherits(createLineReader1, EventEmitter);
 
-module.exports=createLineReader1;
+module.exports = createLineReader1;

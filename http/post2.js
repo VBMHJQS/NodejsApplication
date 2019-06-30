@@ -5,16 +5,16 @@ var request = require('request');
 // }
 // })
 var options = {
-  host:'localhost',
-  port:8080,
-  path:'/sig/user/testNodePost',
-  method:'post'
+    host: 'localhost',
+    port: 8080,
+    path: '/sig/user/testNodePost',
+    method: 'post'
 };
 var data = {
-  product : 'club',
-  sign : 'ddddddddddddddd',
-  sender: '发送者的名字:超级管理员',
-  uids : ['ffwq@qq.com', 'ffqwf@www.com'],
-  msg : 'wwww'
+    product: 'club',
+    sign: 'ddddddddddddddd',
+    sender: '发送者的名字:超级管理员',
+    uids: ['ffwq@qq.com', 'ffqwf@www.com'],
+    msg: 'wwww'
 };
 request.post(options).form(data);

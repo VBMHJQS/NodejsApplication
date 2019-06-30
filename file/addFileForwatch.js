@@ -3,7 +3,7 @@
  */
 var fs = require('fs');
 var filePath = 'F:\\logs\\1.log';
-fs.open(filePath,'a',function(para1,para2){
-  console.log(para1);
-  console.log(para2);
+fs.open(filePath, 'a', function (para1, para2) {
+    console.log(para1);
+    console.log(para2);
 });

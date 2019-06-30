@@ -23,12 +23,12 @@ var fs = require('fs');
  * @param  {[type]} function(err,              data          [description]
  * @return {[type]}                            [description]
  */
-fs.readFile('F:\\20160622\\20160603.log',function(err, data){
-  if(err){
-    console.log(err);
-  }else{
-    var temp = iconv.decode(data, 'gb2312');
-    console.log(temp.split('\r\r\n'));
-  }
+fs.readFile('F:\\20160622\\20160603.log', function (err, data) {
+    if (err) {
+        console.log(err);
+    } else {
+        var temp = iconv.decode(data, 'gb2312');
+        console.log(temp.split('\r\r\n'));
+    }
 
 });

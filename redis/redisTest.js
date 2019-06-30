@@ -1,7 +1,7 @@
 var redis = require("redis");
-var client = redis.createClient(6379,'127.0.0.1',{} );
+var client = redis.createClient(6379, '127.0.0.1', {});
 
-client.on("error", function(err) {
+client.on("error", function (err) {
     console.log("Error " + err);
 });
 
@@ -10,19 +10,19 @@ client.on("connect", runSample);
 function runSample() {
 
     // 设置一个字符串类型的值，返回值：OK
-    client.set("string key", "Hello World", function(err, reply) {
+    client.set("string key", "Hello World", function (err, reply) {
         console.log(reply.toString());
     });
 
     // 获取一个字符串类型的值，返回字：value
-    client.get("string key", function(err, reply) {
+    client.get("string key", function (err, reply) {
         console.log(reply.toString());
     });
 
     // 另外一种方式获取一个字符串类型的值，返回字：value
     var multiCmd = client.multi();
     multiCmd.get("string key");
-    multiCmd.exec(function(err, reply) {
+    multiCmd.exec(function (err, reply) {
         console.log(reply.toString());
     });
 
@@ -30,8 +30,8 @@ function runSample() {
     client.expire('string key', 3);
 
     // 有效时间验证
-    var myTimer = setInterval(function() {
-        client.get('string key', function(err, reply) {
+    var myTimer = setInterval(function () {
+        client.get('string key', function (err, reply) {
             if (reply) {
                 console.log('I live: ' + reply.toString());
             } else {
@@ -43,8 +43,8 @@ function runSample() {
     }, 1000);
 
     // 检查一个值在失效之前存留了多长时间
-    var myTimer = setInterval(function() {
-        client.get('string key', function(err, reply) {
+    var myTimer = setInterval(function () {
+        client.get('string key', function (err, reply) {
             if (reply) {
                 console.log('I live: ' + reply.toString());
                 client.ttl('string key', writeTTL);

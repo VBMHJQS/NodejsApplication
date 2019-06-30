@@ -6,7 +6,7 @@ var logFolder = 'F:\\20160622';
 var array = new Array();
 var logsPath = new Array();
 var recordsArray = new Array();
-fs.readdirSync(logFolder).forEach(function(item, index) {
+fs.readdirSync(logFolder).forEach(function (item, index) {
     var temFile = logFolder + path.sep + item;
     var stat = fs.lstatSync(temFile);
     if (!stat.isDirectory()) {
@@ -28,7 +28,7 @@ function getLogsRecords(logsPath, index) {
     }
 
     var temFile = logsPath[index];
-    fs.readFile(temFile, function(err, data) {
+    fs.readFile(temFile, function (err, data) {
         var temp = iconv.decode(data, 'gb2312');
         //console.log(temp);
         var logsArr = temp.split('\r\r\n');
@@ -38,38 +38,40 @@ function getLogsRecords(logsPath, index) {
                 i = i - 1;
             }
         }
-        for(var i in logsArr){
-          recordsArray = recordsArray.concat(logsArr[i].split('\r\n'));
+        for (var i in logsArr) {
+            recordsArray = recordsArray.concat(logsArr[i].split('\r\n'));
         }
         console.log(temFile + '>>>' + logsArr.length);
-        getLogsRecords(logsPath,index+1);
+        getLogsRecords(logsPath, index + 1);
         //recordsArray.concat(logsArr)
         // array.concat(logsArr);
         // console.log(array.lenght);
     });
 }
-split2();
-function split2() {
-  var temFile = 'F:\\20160622\\20160606.log';
-  var array = new Array();
-  fs.readFile(temFile, function(err, data) {
-      var temp = iconv.decode(data, 'gb2312');
-      //console.log(temp);
-      var logsArr = temp.split('\r\r\n');
 
-      for(var i in logsArr){
-        array = array.concat(logsArr[i].split('\r\n'));
-      }
-      for (var i in array) {
-          if (array[i] == '' || array[i] == 'undefined') {
-              array.splice(i, 1);
-              i = i - 1;
-          }
-      }
-      console.log(array);
-      //getLogsRecords(logsPath,index+1);
-      //recordsArray.concat(logsArr)
-      // array.concat(logsArr);
-      // console.log(array.lenght);
-  });
+split2();
+
+function split2() {
+    var temFile = 'F:\\20160622\\20160606.log';
+    var array = new Array();
+    fs.readFile(temFile, function (err, data) {
+        var temp = iconv.decode(data, 'gb2312');
+        //console.log(temp);
+        var logsArr = temp.split('\r\r\n');
+
+        for (var i in logsArr) {
+            array = array.concat(logsArr[i].split('\r\n'));
+        }
+        for (var i in array) {
+            if (array[i] == '' || array[i] == 'undefined') {
+                array.splice(i, 1);
+                i = i - 1;
+            }
+        }
+        console.log(array);
+        //getLogsRecords(logsPath,index+1);
+        //recordsArray.concat(logsArr)
+        // array.concat(logsArr);
+        // console.log(array.lenght);
+    });
 }

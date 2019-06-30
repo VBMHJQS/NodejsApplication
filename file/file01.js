@@ -1,6 +1,6 @@
 /**
-阻塞程序，即同步
-*/
+ 阻塞程序，即同步
+ */
 var fs = require('fs');
 
 var data = fs.readFileSync('input.txt');

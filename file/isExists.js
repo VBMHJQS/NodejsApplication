@@ -5,7 +5,7 @@ var path = 'C:\\Users\\王兴超\\Desktop\\electron-simple\\web_content\\data\\f
 var formulaArray = new Array();
 var formulaStr;
 
-var preIsExist = function() {
+var preIsExist = function () {
     var deffered = Q.defer();
     var rl = readline.createInterface({
         input: fs.createReadStream(path, {
@@ -14,11 +14,11 @@ var preIsExist = function() {
         output: null
     });
 
-    rl.on('line', function(line) {
+    rl.on('line', function (line) {
         if (line) {
             formulaArray.push(JSON.parse(line).formula);
         }
-    }).on('close', function() {
+    }).on('close', function () {
 
 
         //generateArraySend(logsArr, true); //将历史的数组发送出去
@@ -34,12 +34,13 @@ var preIsExist = function() {
 }
 
 function index() {
-    preIsExist().then(function(data) {
+    preIsExist().then(function (data) {
         return data;
-    }, function(error) {
+    }, function (error) {
         console.error(error);
     });
     console.log(123);
 }
+
 console.log(index());
 // module.exports.isExis  ts = preIsExist;

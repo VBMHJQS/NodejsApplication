@@ -21,8 +21,8 @@ async.waterfall([
 
         callback(null, threearg + '| four');
     },
-    function(fourarg,callback){
-      callback(null,fourarg + '| five')
+    function (fourarg, callback) {
+        callback(null, fourarg + '| five')
     }
 ], function (error, result) {
     console.log(error);

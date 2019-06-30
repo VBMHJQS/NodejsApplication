@@ -3,11 +3,11 @@
  */
 var fs = require('fs');
 var filePath = 'F:\\logs';
-fs.watch(filePath,function(event,filename){
-  console.log('event: ' + event);
-  if(filename){
-    console.log(filename);
-  }else {
-    console.log('nothings');
-  }
+fs.watch(filePath, function (event, filename) {
+    console.log('event: ' + event);
+    if (filename) {
+        console.log(filename);
+    } else {
+        console.log('nothings');
+    }
 });

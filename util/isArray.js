@@ -1,7 +1,7 @@
 var util = require('util');
 
 util.isArray([])
-  // true
+// true
 util.isArray(new Array)
-  // true
+// true
 util.isArray({})

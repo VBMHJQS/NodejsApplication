@@ -1,7 +1,7 @@
 var fs = require('fs');
 console.log('start');
-fs.readdirSync('F:\\20160622').forEach(function(filename){
-  console.log(filename);
+fs.readdirSync('F:\\20160622').forEach(function (filename) {
+    console.log(filename);
 });
 console.log('end');
 //

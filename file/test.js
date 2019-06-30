@@ -13,8 +13,9 @@ function logObj(str) {
     }
 
     var test = {
-        name : temp
+        name: temp
     };
     console.log(test);
 }
+
 logObj('wangxc')

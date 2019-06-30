@@ -5,12 +5,15 @@ function removeRepeat(array1, array2) {
     var temparray = []; //临时数组2
     for (var i = 0; i < arr2.length; i++) {
         temp[arr2[i]] = true; //巧妙地方：把数组B的值当成临时数组1的键并赋值为真
-    };
+    }
+    ;
     for (var i = 0; i < arr1.length; i++) {
         if (!temp[arr1[i]]) {
             temparray.push(arr1[i]); //巧妙地方：同时把数组A的值当成临时数组1的键并判断是否为真，如果不为真说明没重复，就合并到一个新数组里，这样就可以得到一个全新并无重复的数组
-        };
-    };
+        }
+        ;
+    }
+    ;
     return temparray;
 }
 

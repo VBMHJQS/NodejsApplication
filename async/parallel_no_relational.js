@@ -5,16 +5,16 @@
 var async = require('async');
 console.time('parallel');
 async.parallel({
-    oneClass: function(done) {
+    oneClass: function (done) {
         done(null, 'oneClass');
     },
-    twoClass: function(done) {
+    twoClass: function (done) {
         done('myerror', 'twoClass');
     },
-    threeClass: function(done) {
+    threeClass: function (done) {
         done(null, 'threeClass');
     }
-}, function(error, result) {
+}, function (error, result) {
     console.log('one:', result.oneClass);
     console.log('two:', result.twoClass);
     console.log('three:', result.threeClass);
